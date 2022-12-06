@@ -22,3 +22,11 @@ export const messages = {
   createdAt: Date,
   message: String,
 }
+
+export const reads = {
+  _id: String,
+  userId: String,
+  roomId: String,
+  lastAt: Date,
+  updateAt: Date,
+}
