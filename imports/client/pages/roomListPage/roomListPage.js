@@ -3,7 +3,7 @@ import './roomListPage.html'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 import { Rooms, Read } from '/imports/collections'
 
-
+//주석 ver.
 Template.roomListPage.events({
   'click button[name=btn_search]': function(evt, tmpl) {  //서치 기능은 채팅기능 다 구현되면..해볼 것
     const search_name = tmpl.find('input[name=username]').value
