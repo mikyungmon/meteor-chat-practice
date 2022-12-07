@@ -63,8 +63,7 @@
 
                         {{#each data in room_list}}
                           {{#with data}}
-                          <li class="p-3 border-bottom">
-                            <a href="#!" class="d-flex justify-content-between">
+                            <li class="p-3 border-bottom d-flex justify-content-between">
                               <div class="d-flex flex-row">
                                 <div>
                                   <img
@@ -79,20 +78,21 @@
                               </div>
                               <div class="pt-1">
                                 <p class="small text-muted mb-1">{{getDate data.updatedAt}}</p>
-                                <p></p>
-                                {{#if ms_read data._id}}
+                              <div>
+                                {{#if isRead data._id}}
                                   <span class="badge bg-danger rounded-pill float-end">읽지 않음</span>
                                 {{else}}
                                   <span class="badge bg-primary rounded-pill float-end">다 읽음</span>
                                 {{/if}}
-                                <p><br/></p>
+                              </div>
+                                <br>
 
-                                <button type="button" class="btn btn-warning btn-sm float-end" name="btn_out">나가기
-                                </button>
+                                <div class="btn btn-warning btn-sm float-end"
+                                     name="btn_join">{{isJoin data.joiner}}</div>
 
                               </div>
-                            </a>
-                          </li>
+
+                            </li>
                           {{/with}}
                         {{/each}}
 

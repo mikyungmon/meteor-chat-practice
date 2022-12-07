@@ -9,7 +9,7 @@ Meteor.methods({
       lastUserName: "new chat room",
       lastMessage: "새로운 채팅방이 생성되었습니다!",
       updatedAt:time,
-      joiner: Array[ this.userId],
+      joiner:[this.userId],
     }
     const room_id = Rooms.insert(roomsData)
 
