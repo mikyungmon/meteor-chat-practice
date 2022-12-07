@@ -31,13 +31,12 @@ Template.roomListPage.events({
   },
 
   'click li': function() {
-    console.log('li click!!!!')
-    FlowRouter.go('/chatRoom/' + this._id)
+    // console.log(this)  //this.id가 undefined 인데..? --> {{#with}} 사용해서 해결
+    FlowRouter.go('/chatRoom/' + this._id)    // chatroom + 방의 ._id
   },
 
   'click button[name=btn_out]': function() {  // 채팅방 나가기 버튼
-    Meteor.logout()
-    alert('로그아웃 완료!')
+    console.log('채팅방 나가기')
   },
 
   //
@@ -52,31 +51,41 @@ Template.roomListPage.events({
 })
 
 Template.roomListPage.helpers({
+  // 최신순으로 Rooms 정렬
   room_list() {
-    return Rooms.find({ sort: { updatedAt: -1 } })
+    return Rooms.find({}, { sort: { updatedAt: -1 } })
+  },
+
+  // 시간 변경
+  getDate(date) {
+    return date.toLocaleString();
   },
 
   // 메세지 읽음 여부 반환
   ms_read(room_id) {
-    const ms_read = Read.findOne({ userId: Meteor.userId(), roomId: room_id })
-    if (!ms_read) return
-
-    if (ms_read.lastAt === ms_read.updatedAt) {
-      console.log('메세지 다 읽음')
-      return true
-    }
-    else {
-      console.log('읽을 메세지 남음')
-      return false
-    }
+    console.log(22222, Read.findOne({roomId: room_id}))
+    // const ms_read = Read.findOne({userId: Meteor.userId(), roomId: room_id })
+    // const ms_read = Read.findOne({sort:{lastAt:-1}})
+    // console.log(111, ms_read)
+    // if (!ms_read) return
+    //
+    // if (ms_read.lastAt >= ms_read.updatedAt) {
+    //   console.log('메세지 다 읽음')
+    //   return true
+    // }
+    // else {
+    //   console.log('읽을 메세지 남음')
+    //   return false
+    // }
   },
 })
 
 // todo - 미사용 상태라 파일 합치면서 주석 처리 했습니다. 확인 필요합니다.
-// Template.roomListPage.onCreated(function() {
-//   var self = this;
-//   self.roomListSub = self.subscribe("roomList",{profession:up})
-// })
+Template.roomListPage.onCreated(function() {
+  var self = this;
+  self.roomListSub = self.subscribe("roomList")
+  self.messageReadSub = self.subscribe("messageRead")
+})
 
 Template.roomListPage.onDestroyed(function() {
 })
