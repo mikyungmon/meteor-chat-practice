@@ -2,51 +2,44 @@
   <div class="d-flex justify-content-between flex-column  w-100 vh-100 ">
     {{!--    헤더--}}
     <div class="p-1 d-flex justify-content-between w-100 border">
-      <button class="btn btn-dark">뒤로</button>
+      <button class="room_back btn btn-dark">뒤로</button>
       <h3>CHAT</h3>
-      <button class="btn btn-dark">나가기</button>
+      <button class="room_out btn btn-dark">나가기</button>
     </div>
 
     {{!--    메인--}}
     <div class="flex-grow-1 position-relative">
-      <div id="b" class="overflow-auto position-absolute top-0 bottom-0 start-0 end-0">
+      <div id="scroll-box" class="overflow-auto position-absolute top-0 bottom-0 start-0 end-0">
         {{#if Template.subscriptionsReady }}
-          {{#each item in list }}
-            <ul class="p-4">
-              {{!--                      {{#if division item.userId }}--}}
-              <li>
-                소고기양양
-              </li>
-              <li class="speech_bubble">
-                하이루
-              </li>
-              <li>
-                2022-12-22/12:12
-              </li>
-            </ul>
-            {{!--                    {{ else }}--}}
-            <ul class="p-4 ">
-              <li class="d-flex flex-row-reverse">
-                {{ item.username }}
-              </li>
-              <li class="speech_bubble d-flex flex-row-reverse">
-                {{ item.message }}
-              </li>
-              <li class="d-flex flex-row-reverse">
-                {{ getDate item.createdAt }}
-              </li>
-              {{!--          {{/if}}--}}
-            </ul>
-          {{/each}}
+          <ul class="p-4">
+            {{#each item in list }}
+              {{#if text_color item }}
+                <li class="p-2 d-flex flex-column {{text_location item}}">
+                  <span class="p-1">
+                    {{ item.username }}
+                  </span>
+                  <span class="p-2 fw-semibold rounded-pill {{text_color item}} ">
+                    {{ item.message }}
+                  </span>
+                  <span class="p-1">
+                    {{ getDate item.createdAt }}
+                  </span>
+                </li>
+              {{/if}}
+            {{/each}}
+          </ul>
         {{ else }}
-          Loading...
+          <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
         {{/if}}
       </div>
     </div>
 
     {{!--    입력창--}}
     <form class="d-flex w-100 ">
-      <textarea autofocus class="form-control p-3" rows="5" aria-label="With textarea"
+      <textarea style="resize: none" autofocus class="form-control p-3 bi-textarea-resize" rows="5" aria-label="With textarea"
                 name="text" placeholder="채팅을 입력해주세요"></textarea>
       <input class="chat_button p-2 btn btn-outline-dark" type="button" value="전송">
     </form>

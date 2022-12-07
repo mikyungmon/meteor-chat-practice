@@ -6,15 +6,21 @@ Template.chatRoomPage.onCreated(function () {
   const roomId = FlowRouter.getParam("_id")
 
   this.subscribe("chatMsg", roomId)
-
 });
 
 Template.chatRoomPage.onRendered(function () {
-  this.autorun(function() {
-    a.scroll(0,9104)
+  const self = this
+  this.autorun(function () {
+    Messages.find({}).count()
+    const scroll = self.find("#scroll-box")
+    setTimeout(function(){
+      const msg_height = scroll.scrollHeight
+      scroll.scrollTo(0,msg_height)
+    },100)
   })
 });
 
+//todo:이거피료할수도있으니 남겨둠
 // Template.chatMsg.onDestroyed(function(){
 //   const self = this;
 //   self.chatMsgSub.stop();
@@ -25,9 +31,25 @@ Template.chatRoomPage.helpers({
     return Messages.find({})
   },
 
-  // division(item) {
-  //   return item !== user._id
-  // },
+  text_color(item){
+    const user= Meteor.user()
+
+    if(item.userId !== user._id){
+      return "text-bg-success"
+    }else {
+      return "bg-warning"
+    }
+  },
+
+  text_location(item){
+    const user = Meteor.user()
+
+    if(item.userId !== user._id){
+      return "align-items-start"
+    }else {
+      return "align-items-end"
+    }
+  },
 
   getDate(date) {
     return date.toLocaleString();
@@ -35,6 +57,16 @@ Template.chatRoomPage.helpers({
 });
 
 Template.chatRoomPage.events({
+  "click .room_back": function () {
+    FlowRouter.go('/roomList')
+  },
+
+  "click .room_out":function(){
+    const roomId = FlowRouter.getParam("_id")
+    Meteor.call("roomExit", roomId)
+    FlowRouter.go('/roomList')
+  },
+
   "click .chat_button": function (e, t) {
     chat_room(e, t)
   },
@@ -50,16 +82,12 @@ function chat_room(e, t) {
   const user = Meteor.user();
   const username = user.profile.name
   const level = user.profile.level
-  // console.log("user",user)
-  // console.log("username",username)
-  // console.log("userprofile",level)
-  // console.log("date",new Date())
 
   const text = t.find("textarea[name=text]").value
-  // console.log("Text",text)
+  const roomId = FlowRouter.getParam("_id")
 
   const data = {
-    roomId: "3",
+    roomId: roomId,
     userId: user._id,
     username: username,
     userAvatar: "",
@@ -67,7 +95,11 @@ function chat_room(e, t) {
     createdAt: new Date(),
     message: text,
   }
-  Meteor.call("messageInsert", data)
 
+  if(text === "" || text === null || text === undefined){
+    return
+  }else {
+    Meteor.call("messageInsert", data)
+  }
   t.find("textarea[name=text]").value = ""
 }

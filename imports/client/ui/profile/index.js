@@ -1,5 +1,5 @@
-import './profile.html'
-// import './profileEvents.js'
+import "./profile.html";
+import "./profileEvents.js";
 // import './profileHelpers.js'
 // import './profileOnCreated.js'
 // import './profileOnRendered.js'

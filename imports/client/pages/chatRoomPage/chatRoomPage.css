@@ -10,13 +10,3 @@ ul,li {
 a {
   text-decoration: none;
 }
-
-.speech_bubble {
-  position: relative;
-  /*background: #00aabb;*/
-  border-radius: .4em;
-}
-
-* {
-  /*outline: 1px solid red;*/
-}
