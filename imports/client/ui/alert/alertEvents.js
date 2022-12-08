@@ -1,44 +1,33 @@
-import { Template } from 'meteor/templating'
-import { Modal } from 'bootstrap'
+import { Template } from "meteor/templating";
+import { Modal } from "bootstrap";
 
-Template.alert.events({
-  'click .btn-alert'() {
-    // todo - 에이든
-    //  var 변수 선언 금지합니다. 변경해주세요
-    var myModal = new Modal(document.getElementById('Mymodal'), {
-      keyboard: false,
-    })
-    myModal.show()
-  },
-})
+import "./alert.html";
 
-var moduleTest3;
+export const ALERT = (title, value) => {
+  let myModal = new Modal(document.getElementById("alertModal"), {
+    keyboard: false,
+  });
 
-(function(window) {
-  var module1 = {
-    name: function() {
-      alert('module1 in moduleTest3!!')
-    },
-  }
+  const Title = document.getElementById("title");
+  const body = document.getElementById("text");
+  Title.innerText = title;
+  body.innerText = value;
+  myModal.show();
+};
 
-  moduleTest3 = module1
-})(window)
-
-var moduleTest4 = (function(window) {
-  var module1 = {
-    name: function() {
-      alert('module1 in moduleTest4!!')
-    },
-  }
-
-  return module1
-})(window)
-
-// todo - 에이든
-//   다른 인원이 `import ALERT from '/import/client/ui/alert'` 해서
-//   ALERT('바디 내용')
-//   을 하면 알림 창이 뜨도록 만들어 봅시다.
-
-// moduleTest3.name(); //module1 in moduleTest3!!
-//
-// moduleTest4.name(); //module1 in moduleTest4!!
+//    ✅특정 메소드 추가 용도 TEST
+// export const ALERT2 = () => {
+//   let module1 = {
+//     name: function (title, value) {
+//       let myModal = new Modal(document.getElementById("alertModal"), {
+//         keyboard: false,
+//       });
+//       const element = document.getElementById("text");
+//       const Title = document.getElementById("title");
+//       element.innerText = value;
+//       Title.innerText = title;
+//       myModal.show();
+//     },
+//   };
+//   return module1;
+// };

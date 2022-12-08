@@ -3,7 +3,7 @@
     {{!--    헤더--}}
     <div class="p-1 d-flex justify-content-between w-100 border">
       <button class="room_back btn btn-dark">뒤로</button>
-      <h3>CHAT</h3>
+      <h3>😺CHAT😺</h3>
       <button class="room_out btn btn-dark">나가기</button>
     </div>
 
@@ -13,59 +13,42 @@
         {{#if Template.subscriptionsReady }}
           <ul class="p-4">
             {{#each item in list }}
-{{!-- todo - 코참
-        이 if 블럭은 언제나 truthy(true) 값을 내보냅니다.
-        의미없는 블럭은 삭제하도록 합시다.
---}}
-              {{#if text_color item }}
-                <li class="p-2 d-flex flex-column {{text_location item}}">
-                  <span class="p-1">
-                    {{ item.username }}
-                  </span>
-{{!-- todo - 코참
-        .fw-semibold 클레스는 무엇인가요?
-        사용하지 않는 의미없는 클레스는 남겨두지 않는 것이 좋습니다.
---}}
-                  <span class="p-2 fw-semibold rounded-pill {{text_color item}} ">
+              <li class="p-2 d-flex {{ text_location item }} gap-2">
+                <div>
+                  <img class="chat-room-img ratio ratio-1x1 rounded-4" src={{ item.userAvatar }}>
+                </div>
+                <div class="d-flex flex-column {{ text_align item }}">
+                    <span class="chat-item p-1">
+                      {{ item.username }}
+                    </span>
+                  <span class="p-2 rounded-2 shadow-sm text-white  {{ text_color item }} ">
                     {{ item.message }}
                   </span>
-                  <span class="p-1">
+                  <span class="chat-item p-1">
                     {{ getDate item.createdAt }}
                   </span>
-                </li>
-              {{/if}}
+                </div>
+              </li>
             {{/each}}
           </ul>
         {{ else }}
-{{!-- todo - 코참
-        이곳에 버튼 태그를 쓰는 것은 의미가 맞지 않습니다.
-        class만 동일하다면 div도 버튼처럼 보이게 할 수 있습니다.
-        UI를 바꿔봅시다. 원형 프로그래시브바를 중앙에 띄우는 것도 좋은 방법인것 같습니다.
---}}
-          <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-          </button>
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         {{/if}}
       </div>
     </div>
 
     {{!--    입력창--}}
     <form class="d-flex w-100 ">
-      {{!-- todo - 코참
-              인라인 스타일은 매우 좋지 못한 습관입니다.
-              앞서 css 파일에서 내부 내용을 모두 지우라고 했지만,
-              이런 경우에야 말로(부트스트렙에 선언되지 않은 속성) 자신만의 클레스를 css 파일에 선언하여,
-              스타일을 입히는 것입니다!!
-              다른 팀원이나 라이브러리와 겹치지 않을만한 클레스명을 생성하고, (예: .kocharm-no-resize 또는 .chat-room-no-resize)
-              css 파일에서 아래 인라인 속성을 적용해보도록 합시다.
-      --}}
-      {{!-- todo - 코참
-              테그의 속성은 한줄로 모두 표기하거나 모두 각각 한줄에 표기해봅시다.
-      --}}
-      <textarea style="resize: none" autofocus class="form-control p-3 bi-textarea-resize" rows="5"
+      <textarea id="chat-box"
+                class="chat-window form-control p-3 bi-textarea-resize"
+                rows="5"
                 aria-label="With textarea"
-                name="text" placeholder="채팅을 입력해주세요"></textarea>
+                placeholder="채팅을 입력해주세요">
+      </textarea>
       <input class="chat_button p-2 btn btn-outline-dark" type="button" value="전송">
     </form>
   </div>

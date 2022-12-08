@@ -1,22 +1,14 @@
-/* todo - 코참
-     프로젝트를 하는 다른 모든 사람에게 영향을 줍니다.
-     반드시 커스텀 스타일을 사용해야 하는 경우,
-     다른 협업자에게 영향을 주지 않는 셀렉터를 사용해야 합니다.
-     예: .koc-btn .koc-input 등
-     아래는 전체 프로젝트에 영향을 주므로 삭제해야 합니다.
-     .
-     ul,li,a에 선언한 속성은 부트스트랩에 클레스로 정의 되어 있습니다.
-     찾아서 클레스를 적용하고 이 파일은 빈 파일로 만들어 봅시다.
-     시간이 부족할 수 있지만, 문서에서 정보를 찾는건 개발자에게 매우 중요한 능력입니다.*/
-*{
-  margin: 0;
-  padding: 0;
+
+body {
+  cursor:url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcIwR9P%2FbtraRjIi6El%2FofkcHd4wk3BWMKZorWGH0k%2Fimg.png"),auto;
 }
 
-ul,li {
-  list-style: none;
+.chat-room-img {
+  width: 40px;
 }
-
-a {
-  text-decoration: none;
+.chat-item {
+  font-size: 13px;
+}
+.chat-window {
+  resize: none
 }

@@ -1,62 +1,53 @@
 <template name="signUpPage">
-  <nav class="nav p-3 mb-2 bg-secondary text-white">
-    <a class="nav-link active" aria-current="page" href="/signIn">Signin</a>
-    <a class="nav-link" href="/signup">SignUp</a>
-    <a class="nav-link" href="signout">SignOut</a>
-  </nav>
-  <h1>SignUpPage</h1>
+  <div id="background" class="w-100 h-100">
+  <br /><br /><br /><br />
+<!--  {{> alert}}-->
   {{!-- todo - 에이든
           본인이 업로드 한 프로필 사진은 미리보기가 지원되면 좋겠습니다.
           또한 마음이 바뀌어 업로드 했던 파일을 취소 할 수 있는 기능도 필요해 보입니다.
           가입 이후 바로 페이지 이동은 매우 좋았지만, 알림창은 커스텀 알림창(글로벌)으로 바꾸도록 합시다.
   --}}
   <!--  ✅프로필 사진 업로드 기능 -->
-  <div class="d-inline-flex flex-column mt-5">
+  <div class="d-inline-flex flex-column mt-5 gap-2">
+    <div><p class="d-flex fs-3 fw-bold justify-content-center gap-2">Please Sign Up</p></div>
     <img src="/creverse_logo.png" class="d-flex rounded mx-auto w-25" alt="...">
-    <div><p class="d-flex fs-3 fw-bold justify-content-center">Please Sign Up</p></div>
     <form class="validation-form needs-validation" id="btn-signUp" novalidate>
       <div class="container col-lg-4">
         <div class="input-group mb-3">
           {{!-- todo - 에이든
                   인라인 스타일 코드 빼도록 합시다. 부트스트랩을 활용합시다.
           --}}
-          <i class="bi bi-person-badge m-1/3" style="font-size: 30px"></i>
+<!--          src="{{avatar}}"-->
+          <img id="preview" class="rounded-circle  text-center" width="50">
+          <i class="bi bi-person-badge fs-2" ></i>
           {{!-- todo - 에이든
                   속성은 한 줄이면 한 줄로,
                   여러 줄이면 모두 여러 줄로 합시다.
                   아래와 같이 두 개의 속성은 한 줄로 나머지는 단독 줄로 하는 것 금지.
                   맡은 파트의 모든 HTML 확인해서 수정합시다.
           --}}
-          <input type="file" class="form-control"
-                 name="picture"
-                 placeholder="Profile Picture"
-                 aria-label="Username"
-                 aria-describedby="basic-addon1"
-                 required>
-          <div class="valid-feedback">Validate!</div>
+          <input  id="PreAvatar" type="file" accept="image/png, image/jpeg,.txt" class="form-control" name="pictureCheck" placeholder="Profile Picture" aria-label="Username" aria-describedby="basic-addon1" required>
+          <i class="bi bi-x-square-fill fs-2 " id="cancle"></i>
           <div class="invalid-feedback">Need to file!</div>
         </div>
+
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="ID" aria-label="Username" name="username"
-                 aria-describedby="basic-addon1" required>
+          <input type="text" class="form-control" placeholder="ID" aria-label="Username" name="username" aria-describedby="basic-addon1" required>
           <div class="valid-feedback">Validate!</div>
           <div class="invalid-feedback">Need ID</div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Name" name="name" aria-label="Username"
-                 aria-describedby="basic-addon1" pattern="^[가-힣]{2,5}$" required>
+          <input type="text" class="form-control" placeholder="Name" name="name" aria-label="Username" aria-describedby="basic-addon1" pattern="^[가-힣]{2,5}$" required>
           <div class="valid-feedback">Validate!</div>
           <div class="invalid-feedback">Need name</div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="E-mail" name="email" aria-label="Username"
-                 aria-describedby="basic-addon1" required>
+          <input type="email" class="form-control" placeholder="E-mail" name="email" aria-label="Username" aria-describedby="basic-addon1" required>
           <div class="valid-feedback">Validate!</div>
           <div class="invalid-feedback">Need E-mail!</div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control " placeholder="Password" name="password" aria-label="Username"
-                 required>
+          <input type="text" class="form-control " placeholder="Password" name="password" aria-label="Username" required>
           <div class="valid-feedback">Validate!</div>
           <div class="invalid-feedback">Need Password!</div>
         </div>
@@ -67,5 +58,6 @@
         </div>
       </div>
     </form>
+  </div>
   </div>
 </template>

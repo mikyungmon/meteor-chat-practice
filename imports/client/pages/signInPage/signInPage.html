@@ -1,48 +1,10 @@
 <template name="signInPage">
-  {{> alert}}
-  {{> profile}}
   <!--  헤더  -->
   {{!-- todo - 에이든
           사이드 매뉴를 만들어 본 것은 정말 좋은 시도입니다.
           하지만 한 번 더 클릭해야지 가입이 가능한 플로우는 좋지 못한 UX 입니다.
           햄버거 매뉴는 빼도록 합시다. (이 구현 경험은 추후 도움이 될 것임)
   --}}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/signIn">Creverse</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            {{!-- todo - 에이든
-                    로그인 페이지에서 로그인 링크는 불필요 합니다.
-            --}}
-            <a class="nav-link active" aria-current="page" href="/signIn">Signin</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">SignUp</a>
-          </li>
-          <li class="nav-item">
-            {{!-- todo - 에이든
-                    로그인 후, 로그인 페이지로 이동할 수 없게끔 라우터 설정이 되어 있습니다.
-                    불필요한 메뉴는 빼도록 합시다.
-             --}}
-            <a class="nav-link disabled" href="signout" tabindex="-1" aria-disabled="true">SignOut</a>
-          </li>
-        </ul>
-        {{!-- todo - 에이든
-                불필요한 form과 서브밋 버튼 삭제이 왜 있나요. 삭제가 필요해 보입니다.
-        --}}
-        <form class="d-flex">
-          <!--          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
   {{!-- todo - 에이든
           케러셀 구현은 좋았지만, 내부 이미지 높이에 따라 케러셀 높이가 변경되는 것은 매우 좋지 못한 UI/UX 입니다.
           보완을 해봅시다.
@@ -57,27 +19,27 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="10000">
-        <img src="https://www.cre-verse.io/images/creverse_logo_slogan.png" class="d-block text-center " width="400"
+        <img src="https://www.cre-verse.io/images/creverse_logo_slogan.png" class="d-block  w-100 text-center "
              alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+          <h5>First CLEAR</h5>
+          <p>Strive for progress, not perfection.</p>
         </div>
       </div>
       <div class="carousel-item" data-bs-interval="2000">
-        <img src="https://www.cre-verse.io/images/news/news2.jpg" class="d-block w-80 text-center" width="400"
+        <img src="https://www.cre-verse.io/images/creverse_logo_slogan.png" class="d-block w-100 text-center"
              alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
+          <h5>Second CREATIVE</h5>
+          <p>The first step is always the hardest.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://www.cre-verse.io/images/news/news3.jpg" class="d-block w-80 text-center" width="400"
+        <img src="https://www.cre-verse.io/images/creverse_logo_slogan.png" class="d-block w-100 text-center"
              alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+          <h5>Third TECHNOLOGY</h5>
+          <p>The future is gained from present pains.</p>
         </div>
       </div>
     </div>
@@ -99,7 +61,7 @@
   --}}
   <!--  ✅프로필 사진 업로드 기능 -->
   <div class="d-inline-flex flex-column mt-1">
-    <img src="/creverse_logo.png" class="d-flex rounded mx-auto w-25" alt="...">
+    <img src="/creverse_black.png" class="d-flex rounded mx-auto w-25" alt="...">
     <div><p class="d-flex fs-3 fw-bold justify-content-center">Please Sign In</p></div>
     <form id="btn-signIn" class="validation-form needs-validation" novalidate>
       <div class="container col-lg-4">
@@ -116,8 +78,8 @@
         </div>
       </div>
       <div class="form-check">
-        <div class="d-flex justify-content-center">
-          <label class="form-check-label" for="flexCheckDefault">
+        <div class="d-flex justify-content-center gap-2">
+          <label class="form-check-label m-2" for="flexCheckDefault">
             {{!-- todo - 에이든
                     채크 후 로그인 하고 로그아웃 하면,
                     아이디 입력창에 아이디가 출력되지만 채크박스는 채크되어 있지 않습니다.
@@ -127,6 +89,7 @@
             Remember me
           </label>
           <button type="submit" class="btn btn-primary ">Sign In</button>
+          <a href="/signup" class="btn btn-primary">Sign Up</a>
         </div>
       </div>
     </form>
