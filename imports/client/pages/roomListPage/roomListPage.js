@@ -6,9 +6,15 @@ import { Read, Rooms } from "/imports/collections";
 Template.roomListPage.events({
   'click button[name=btn_search]': function(evt, tmpl) {  //서치 기능은 채팅기능 다 구현되면..해볼 것
     const search_name = tmpl.find('input[name=username]').value
-    console.log(search_name)
-    Session.set("searchName", search_name);
-    tmpl.find('input[name=username]').value = ''
+
+    Meteor.call('searchUserId', search_name, function(err, result_id){
+      Session.set("userIds", result_id);
+      console.log(Session.get('userIds'))
+    })
+    // const arr = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
+    //
+    // console.log('id:', arr)
+    // console.log('event:', Session.get('searchName'))
   },
 
   'click button[name=btn_logout]': function() {
@@ -23,11 +29,11 @@ Template.roomListPage.events({
 
   "click li": function () {
     const room_id = this._id;
-
+    const click_time = new Date()
     Meteor.call('joinerUpdate', room_id)
+    Meteor.call('readLastAtUpdate', room_id, click_time)
     FlowRouter.go('/chatRoom/' + room_id)
-
-  },
+  }
 });
 
 Template.roomListPage.helpers({
@@ -55,23 +61,30 @@ Template.roomListPage.helpers({
     const my_id = Meteor.userId();
 
     return joiner.includes(my_id) ? "참여중" : "참여하기"; // 삼항연산자
-  },
-
-  // SearchID(){
-  //   const user_id = Meteor.user().findOne({ roomId: room_id })
-  // },
-
-  isIncludeRoom(joiner){
-    const name = Session.get('searchName')
-    // if(joiner.includes(join))
   }
 
 })
 
 Template.roomListPage.onCreated(function() {
-  self.roomListSub = this.subscribe('roomList')
-  self.messageReadSub = this.subscribe('messageRead', Meteor.userId())
-  // self.SearchUserIdSub = this.subscribe('userIdSearch')
+  const instance = this
+  this.subscribe('messageRead', Meteor.userId())
+  this.subscribe('userIdSearch', Session.get('userIds'))
+  this.autorun(function(){
+    instance.subscribe('roomList', Session.get('userIds'), function(){
+      // console.log(11111, Session.get('userIds'))
+      // const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id})
+      // console.log('id', id)
+      // // 검색한 이름이 내 이름이 아닐 때
+      // if(Session.get('searchName') != Meteor.userId()) {
+      //   const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
+      //   console.log('id:', id)
+      // }
+      // else{
+      //   const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
+      // }
+    })
+  })
+
 })
 
 
