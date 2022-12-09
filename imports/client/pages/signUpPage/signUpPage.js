@@ -3,7 +3,6 @@ import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { ALERT } from "../../ui/alert/alertEvents";
 
 import "./signUpPage.html";
-// import { Session } from "../../../../.meteor/local/build/programs/server/assets/packages/session/session";
 
 //함수로 따로 빼서 사진을 base64인코딩하는 작업을 실행합니다
 function toBase64(file) {
@@ -58,7 +57,7 @@ Template.signUpPage.events({
         }
       });
     } else {
-      ALERT("Check", "파일을 골라주세요!");
+      ALERT("Profile Check", "파일을 골라주세요!");
     }
 
     // <form>에 novalidate라고 속성을 추가하여 부트스트랩에서 제공하는 폼API를 활용하여 유효성검사를 하였습니다!

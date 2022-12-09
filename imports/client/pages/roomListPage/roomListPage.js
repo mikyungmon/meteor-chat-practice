@@ -2,6 +2,7 @@ import { Template } from "meteor/templating";
 import "./roomListPage.html";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { Read, Rooms } from "/imports/collections";
+import { ALERT } from "../../ui/alert/alertEvents";
 
 Template.roomListPage.events({
   'click button[name=btn_search]': function(evt, tmpl) {  //서치 기능은 채팅기능 다 구현되면..해볼 것
@@ -11,20 +12,17 @@ Template.roomListPage.events({
       Session.set("userIds", result_id);
       console.log(Session.get('userIds'))
     })
-    // const arr = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
-    //
-    // console.log('id:', arr)
-    // console.log('event:', Session.get('searchName'))
   },
 
-  'click button[name=btn_logout]': function() {
-    FlowRouter.go('/signout')
+  "click button[name=btn_logout]": function () {
+    FlowRouter.go("/signout");
   },
 
-  'click button[name=btn_new]': function() {
-    Meteor.call('roomInsert', (err, room_id) => {
-      err ? alert(err) : FlowRouter.go('/chatRoom/' + room_id)
-    })
+  "click button[name=btn_new]": function () {
+    Meteor.call("roomInsert", (err, room_id) => {
+      err ? alert(err) : FlowRouter.go("/chatRoom/" + room_id);
+      ALERT("🚀채팅방이 생성되셨습니다.", "Welcome Your Room!");
+    });
   },
 
   "click li": function () {
@@ -32,6 +30,7 @@ Template.roomListPage.events({
     const click_time = new Date()
     Meteor.call('joinerUpdate', room_id)
     Meteor.call('readLastAtUpdate', room_id, click_time)
+    ALERT("🚀채팅방에 입장하셨습니다", "Welcome Room!");
     FlowRouter.go('/chatRoom/' + room_id)
   }
 });
@@ -46,15 +45,14 @@ Template.roomListPage.helpers({
   },
 
   isJoinRead(join_bool) {
-    return (join_bool === "참여중") ? true : false
+    return join_bool === "참여중" ? true : false;
   },
 
-  isRead(room_id){
-    const ms_read = Read.findOne({ roomId: room_id })
-    const rooms_data = Rooms.findOne({ _id: room_id })
+  isRead(room_id) {
+    const ms_read = Read.findOne({ roomId: room_id });
+    const rooms_data = Rooms.findOne({ _id: room_id });
 
-    return (ms_read?.lastAt <= rooms_data.updatedAt) ? true : false
-
+    return ms_read?.lastAt <= rooms_data.updatedAt ? true : false;
   },
 
   isJoin(joiner) {
@@ -70,23 +68,10 @@ Template.roomListPage.onCreated(function() {
   this.subscribe('messageRead', Meteor.userId())
   this.subscribe('userIdSearch', Session.get('userIds'))
   this.autorun(function(){
-    instance.subscribe('roomList', Session.get('userIds'), function(){
-      // console.log(11111, Session.get('userIds'))
-      // const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id})
-      // console.log('id', id)
-      // // 검색한 이름이 내 이름이 아닐 때
-      // if(Session.get('searchName') != Meteor.userId()) {
-      //   const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
-      //   console.log('id:', id)
-      // }
-      // else{
-      //   const id = Meteor.users.find({}).fetch().filter(function(user) {return user._id !== Meteor.userId()})
-      // }
-    })
+    instance.subscribe('roomList', Session.get('userIds'))
   })
 
 })
-
 
 Template.roomListPage.onDestroyed(function () {});
 

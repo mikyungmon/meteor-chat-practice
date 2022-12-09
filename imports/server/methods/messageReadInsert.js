@@ -7,9 +7,14 @@ Meteor.methods({
   },
   messageReadUpdate(roomId) {
 
-    const selector1 = {roomId}
-    const option1 = {sort: {createdAt: -1}}
+    const selector1 = { roomId }
+    const option1 = { sort: {createdAt: -1} }
+
     const last_message = Messages.findOne(selector1, option1)
+
+    if(!last_message){
+      return
+    }
 
     const selector2 = {userId: this.userId, roomId}
     const option2 = {
