@@ -7,11 +7,11 @@ import { ALERT } from "../../ui/alert/alertEvents";
 Template.roomListPage.events({
   'click button[name=btn_search]': function(evt, tmpl) {  //서치 기능은 채팅기능 다 구현되면..해볼 것
     const search_name = tmpl.find('input[name=username]').value
-
-    Meteor.call('searchUserId', search_name, function(err, result_id){
-      Session.set("userIds", result_id);
-      console.log(Session.get('userIds'))
-    })
+    Session.set("searchName", search_name);
+    // Meteor.call('searchUserId', search_name, function(err, result_id){
+    //   Session.set("userIds", result_id);
+    //   console.log(Session.get('userIds'))
+    // })
   },
 
   "click button[name=btn_logout]": function () {
@@ -20,8 +20,9 @@ Template.roomListPage.events({
 
   "click button[name=btn_new]": function () {
     Meteor.call("roomInsert", (err, room_id) => {
-      err ? alert(err) : FlowRouter.go("/chatRoom/" + room_id);
-      ALERT("🚀채팅방이 생성되셨습니다.", "Welcome Your Room!");
+      // todo - 주석 풀기
+      // err ? alert(err) : FlowRouter.go("/chatRoom/" + room_id);
+      // ALERT("🚀채팅방이 생성되셨습니다.", "Welcome Your Room!");
     });
   },
 
@@ -52,7 +53,7 @@ Template.roomListPage.helpers({
     const ms_read = Read.findOne({ roomId: room_id });
     const rooms_data = Rooms.findOne({ _id: room_id });
 
-    return ms_read?.lastAt <= rooms_data.updatedAt ? true : false;
+    return (ms_read.lastAt) <= (rooms_data.updatedAt) ? true : false;
   },
 
   isJoin(joiner) {
@@ -64,12 +65,8 @@ Template.roomListPage.helpers({
 })
 
 Template.roomListPage.onCreated(function() {
-  const instance = this
+  this.subscribe('roomList')
   this.subscribe('messageRead', Meteor.userId())
-  this.subscribe('userIdSearch', Session.get('userIds'))
-  this.autorun(function(){
-    instance.subscribe('roomList', Session.get('userIds'))
-  })
 
 })
 

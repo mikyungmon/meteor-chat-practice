@@ -42,14 +42,14 @@
 
                   <div class="overflow-auto position-relative room-height">
                     <ul class="list-unstyled mb-0">
-
+                      {{#if Template.subscriptionsReady}}
                       {{#each data in room_list}}
                         {{#with data}}
                           <li class="p-3 border-bottom d-flex justify-content-between">
                             <div class="d-flex flex-row">
                               <div>
                                 <img
-                                    src={{data.lastUserName}}
+                                    src={{data.lastUserAvatar}}
                                     alt="avatar"
                                     class="d-flex align-self-center me-3"
                                     width="60">
@@ -64,6 +64,7 @@
                               <p class="small text-muted mb-1">{{getDate data.updatedAt}}</p>
                               <div>
                                 {{#if isJoinRead (isJoin data.joiner)}}
+                                  <p>{{isJoinRead (isJoin data.joiner)}}</p>
                                   {{#if isRead data._id}}
                                     <span class="badge bg-danger rounded-pill float-end">읽지 않음</span>
                                   {{else}}
@@ -81,6 +82,7 @@
                           </li>
                         {{/with}}
                       {{/each}}
+                      {{/if}}
                     </ul>
                   </div>
                 </div>
